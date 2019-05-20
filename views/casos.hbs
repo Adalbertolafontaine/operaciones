@@ -1,0 +1,38 @@
+<div class="col-izqui  aside" id="izqu">
+    <div class="consulta">
+        <form action="" id='FRcasos'>
+            <label for="finicio">Fecha Inicial</label>
+            <input type="date" name="inicio" id="finicio"  required>
+            <label for="ffinal">Fecha Final</label>
+            <input type="date" name="final" id="ffinal"  required>
+            <label for="TXTorden">Orden</label>
+            <input type="text" name="orden" id="TXTorden">
+            <label for="SLdivisiones">División</label>
+            <select name="division" id="SLdivisiones" class="Slcambios">
+                <option value="">Seleccione División</option>
+            </select>
+            <label for="Slinspectoria">Inspectoría</label>
+            <select name="inspectoria" id="SLinspectoria" class="Slcambios">
+                <option value="">Selecione Inspectoría</option>
+            </select>
+            <label for="SLseccion">Sección</label>
+            <select name="seccion" id="SLseccion">
+                <option value="">Selecione Sección</option>
+            </select>
+
+            {{>page/botones}}
+
+        </form>
+    </div>
+
+</div>
+<div class="col-centro" id='DVcolegios'>
+
+    <div id="operativo">
+
+        {{>page/casolista}}
+
+    </div>
+
+
+</div>

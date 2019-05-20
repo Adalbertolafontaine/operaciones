@@ -1,0 +1,163 @@
+<div class="col-izqui aside" id="izqu">
+    <form id="FMelectores" method="post">
+        <label for="Tcedula">Cédula:</label>
+        <input type="text" id="Tcedula" placeholder="Introduzca cedula" name="cedula" pattern="[0-9]{11}">
+        <label for="Tnombre">Nombre</label>
+        <input type="text" id="Tnombre" placeholder="Introduzca Nombres" name="Nombres">
+        <label for="Tapellido1">Primer Apellido</label>
+        <input type="text" id="Tapellido1" placeholder="Introduzca Primer Apellido" name="Apellido1">
+        <label for="Tapellido2">Segundo Apellido</label>
+        <input type="text" id="Tapellido2" placeholder="Introduzca Segundo Apellido" name="Apellido2">
+        <label for="Tcolegio">Colegio Electoral</label>
+        <input type="text" id="Tcolegio" placeholder="Colegio Electoral" name="IDColegio">
+        <label for="Tfecha">Fecha de nacimiento</label>
+        <input type="date" name="fecha" id="Tfecha">
+        <label for="Tedad">Edad</label>
+        <input type="number" name="edad" id="Tedad">
+        <div class="formulario">
+            <div class="radio">
+                <input type="radio" name="activo" id="BTactivo"value='true'>
+                <label for="BTactivo">Activo</label>
+                <input type="radio" name="activo" id="BTinactivo"value='' checked> 
+                <label for="BTinactivo">Todos</label>
+            </div></div>
+        <button type="submit" id="buscar">Buscar</button>
+        <input type="reset" value="Limpiar">
+        <div id="encontrados"></div>
+    </form>
+
+</div>
+<div class="col-centro" id='DVelectores'>
+    <div id="estadistica" class="estadisticas aside Ccedulado" style="display:none">
+        <table class="tablaES">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div id="Dvelector" class="elector aside Ccedulado">
+        <form action="" name="elector">
+
+            <div class="cedulado">
+                <div class='imagen'> <img src="/style/06800476498" alt="" id="foto1"></div>
+                <div>
+                    <h1 id="ESnombre">Joaquin Adalberto Lafontaine Coplin</h1>
+                    <h2 id="EScedula">000-0000000-0</h2>
+                    <Span>Sexo</Span> <br>
+                    <span id="fechanacimiento">17-11-1975 (35 años)</span>
+                </div>
+                <div id="regresar">
+                    <span class="icon-table"></span>
+                </div>
+            </div>
+
+
+            <div class="separadores">
+                <span>Datos Personales</span>
+            </div>
+
+
+
+            <div class="electores">
+                <div>
+                    <label for="TIDOcupacion">Ocupacion</label>
+                    <input type="text" name="ocupacion" id="TIDOcupacion">
+                </div>
+                <div>
+                    <label for="TIDNacionalidad">Nacionalidad</label>
+                    <input type="text" name="nacionalidad" id="TIDNacionalidad">
+                </div>
+            </div>
+
+            <div class="separadores">
+                <span>Datos Electorales</span>
+            </div>
+
+
+            <div class="electores">
+                <div>
+                    <label for="TIDcategoria">Categoria</label>
+                    <input type="text" name="categoria" id="TIDcategoria">
+                </div>
+                <div> <label for="TIDCausaCancelacion">Causa Cancelacion</label>
+                    <input type="text" name="estatus" id="TIDCausaCancelacion">
+                </div>
+            </div>
+            <div class="electores">
+                <div>
+                    <label for="Tcolegio">Colegio Electoral</label>
+                    <input type="text" placeholder="Colegio Electoral" name="codigocolegio">
+                </div>
+                <div>
+                    <label for="Trecinto">Recinto Electoral</label>
+                    <input type="text" placeholder="Colegio Recinto" name="descripcionrecinto">
+                </div>
+            </div>
+            <div class="electores">
+                <div>
+                    <label for="TDprovincia">Provincia</label>
+                    <input type="text" placeholder="Provincia" name="descripcionprovincia">
+                </div>
+                <div>
+                    <label for="TDescripcionDistritoMunicipal">Municipio</label>
+                    <input type="TDescripcionDistritoMunicipal" placeholder="Colegio Recinto"
+                        name="descripciondistritomunicipal">
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="lds-spinner aside Ccedulado" style="display:none" id="espera">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+
+    <div class="col-izqui  aside" id="izqu">
+        <div class="consulta">
+            <select name="slprov" id="slprovin" class="">
+                <option value="nacional">Nivel Nacional</option>
+                <option value="pro">Por Provincias</option>
+                {{#each datos.provincias as |provincia provinciaid| }}
+                <option value="{{provincia.id}}">{{ provincia.descripcion}}</option>
+                {{/each}}
+            </select>
+
+            <select name="slmunic" id="slmunic" class="" disabled>
+                <option value="0">Seleccione Municipio</option>
+            </select>
+
+            <select name="slrecinto" id="slrecinto" class="" disabled>
+                <option value="0">Seleccione Recinto</option>
+            </select>
+
+
+        </div>
+        <select name="SLtipo" id="SLtipo">
+            <option value="periodo">Por periodos</option>
+        </select>
+
+
+        <div class="formulario">
+            <div class="radio">
+                <div class="renglones">
+                    <input type="radio" name="slrenglon" id="peso" value="peso">
+                    <label for="peso">Peso Electoral</label>
+
+                    <input type="radio" name="slrenglon" id="RBsexo" value="sexo">
+                    <label for="RBsexo">Genero</label>
+                    <input type="radio" name="slrenglon" id="RBedad" value="edad">
+                    <label for="RBedad">Rango de Edad</label>
+                    <input type="radio" name="slrenglon" id="RBsexoedad" value="sexsoedad">
+                    <label for="RBsexoedad">Genero y Rango de Edad</label>
+
+                </div>
+
+                <div id="DVperiodo" class="periodo">
+                    <input type="radio" name="IRperiodo" id="r2020" value="2020">
+                    <label for="r2020">2020</label>
+
+                </div>
+                <div id="DVventana" class="ventana row">
+                    
+                    <input type="radio" name="ventanas" id="Divesta" value="estadistica">
+                    <label for="Divesta" class="col-xs"><span class="icon-table"></span></label>
+                   
+                    <input type="radio" name="ventanas" id="BTpie" value="DIVpie">
+                    <label for="BTpie" class="col-xs" id="LBpie" ><span  class="icon-pie-chart"></span></label>
+                   
+                    <input type="radio" name="ventanas" id="BTbarras" value="DIVbarras">
+                    <label for="BTbarras" class="col-xs" id="LBbarras" ><span  class="icon-stats-bars2"></span></label>
+                   
+                    <input type="radio" name="ventanas" id="BTcomparacion" value="DIVcomparacion">
+                    <label for="BTcomparacion" class="col-xs" id="LBcomparacion" ><span  class="icon-stats-bars"></span></label>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+    <div class="col-centro" id='DVcolegios'>
+        <div id="estadistica" class="estadisticas  aside">
+            <table class="tablaES">
+                <thead>
+                    <tr>
+                        <th>Partido</th>
+                        <th>2008</th>
+                        <th>2012</th>
+                        <th>2016</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PLD</td>
+                        <td>2,847,438</td>
+                        <td>2,847,438</td>
+                        <td>2,847,438</td>
+                    </tr>
+                    <tr>
+                        <td>PRM</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>PRD</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>PRSC</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Frente Amplio</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div id="DIVpie" class="estadisticas  aside" style="display:none">
+
+        </div>
+        <div id="DIVbarras" class="estadisticas  aside" style="display:none">
+
+        </div>
+        <div class="estadisticas  aside" style="display:none" id="DIVcomparacion">
+        </div>
+
+        <div id="map"></div>
+    </div>

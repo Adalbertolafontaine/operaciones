@@ -1,0 +1,31 @@
+<div class="col-izqui aside" id="izqu">
+    <table>
+        <thead>
+            <tr>
+                <th>Division</th>
+                <th>Activos</th>
+                <th>Realz.</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each datos.divisiones as |division|}}
+            <tr>
+                <td id="{{division}}"></td>
+                <td id="{{division}}a"></td>
+                <td id="{{division}}r"></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+<div class="col-centro" id='DVelecciones'>
+
+    <div id="map" class="estadisticas  aside">
+        
+    </div>
+
+    <div id="popup" class="ol-popup">
+    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+    <div id="popup-content"></div>
+</div>
+</div>

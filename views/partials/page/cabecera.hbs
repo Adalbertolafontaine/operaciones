@@ -1,0 +1,24 @@
+<header>
+    <div class="">
+
+        <div class="menu">
+            <nav>
+                <ul>
+                    {{#each datos.menu as |menu menuid| }}
+                    <li class="{{menu.activo}}">
+                        <a href="{{menu.dirrecion}}" class="{{menu.clase}} {{menu.activo}}">{{menu.nombre}}</a>
+                        {{#if menu.submenu}}
+                        <ul>
+                            {{#each menu.submenu as |submenu|}}
+                            <li><a href="{{menu.dirrecion}}/{{submenu}}">{{submenu}}</a></li>
+                            {{/each}}
+                        </ul>
+                        {{/if}}
+                    </li>
+                    {{/each}}
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</header>

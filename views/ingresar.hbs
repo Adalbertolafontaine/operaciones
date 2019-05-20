@@ -1,0 +1,62 @@
+<div class="col-xs-12">
+    <div class="row" id="cargar">
+        <div class="col-xs">
+            <input type="file" id="file-input" />
+        </div>
+        <div class="col-xs">
+            <button id="btleer" disabled>Leer</button>
+            <button id='validar'>Validar</button>
+        </div>
+
+        <div class="col-xs">
+            <select name="stabla" id="sltabla">
+                <option value="0">Seleccione Tabla</option>
+                <option value="municipio">Municipios</option>
+                <option value="encuesta">Colegios</option>
+                <option value="partido">Partidos Politcos</option>
+            </select>
+        </div>
+
+        <div class="col-xs">
+            <select name="periodo" id="periodo">
+                <option value="0">Seleccione periodo</option>
+                <option value="2008">2008</option>
+                <option value="2012">2012</option>
+                <option value="2016">2016</option>
+            </select>
+        </div>
+        <div class="col-xs">
+            <select name="separador" id="separador">
+                <option value="0">Seleccione Separador</option>
+                <option value=",">Coma ,</option>
+                <option value=";">Punto y coma ;</option>
+            </select>
+        </div>
+    </div>
+    <label>Contenido del archivo:</label><span id="cantidad"></span>
+
+</div>
+<div id="estadistica" class="col-xs-12"></div>
+<div class="row">
+    <div class="col-xs">
+        <button onclick="BTcancelar()" id="btcancelar" disabled>Cancelar</button>
+    </div>
+    <div class="col-xs">
+        <button id="btenviar">Enviar</button>
+    </div>
+    <div class="col-xs">
+        <button id="btenviar">Actualizar</button>
+    </div>
+
+    <div class="col-xs">
+        <select name="ct" id="ct">
+            <option value="text/plain">text/plain</option>
+            <option value="text/html">text/html</option>
+            <option value="text/javascript">text/javascript</option>
+            <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
+            <option value="application/json">application/json</option>
+            <option value="text/json">text/json</option>
+
+        </select>
+    </div>
+</div>

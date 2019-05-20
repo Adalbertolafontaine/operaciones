@@ -1,0 +1,33 @@
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{> page/title}}</title>
+
+   
+    
+    <link rel="stylesheet" href="..{{datos.menu.raiz}}/style/style.css">
+    <link rel="stylesheet" href="..{{datos.menu.raiz}}/style/font.css">
+   
+   
+
+</head>
+
+<body id="body" >
+
+    {{>page/cabecera}}
+
+
+
+    <div class="cuerpo ">
+
+        {{{body}}}
+
+    </div>
+
+</body>
+<script src="/socket.io/socket.io.js"></script>
+ <script src="..{{datos.menu.raiz}}/script/{{datos.menu.js}}bundle.js"></script>
+ <script src="..{{datos.menu.raiz}}/script/commons.bundle.js"></script>
+</html>
