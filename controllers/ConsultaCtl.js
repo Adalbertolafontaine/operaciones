@@ -21,6 +21,7 @@ class ConsultaClass {
                     let datos = [];
                     let request = new Respuesta(query, (err, rowCount, rows) => {
                         if (err) {
+                            conecion.close();
                             resol([]);
                         }
                         else {

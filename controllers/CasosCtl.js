@@ -23,16 +23,16 @@ let elementos = [
     { titulo: 'Otras sustancias', renglon: ['sustancia', 'gramos', 'porciones'], categorias: ['1', '2'], cabceras: ['sustancias', 'gramos', 'porciones'], categoria: true },
     { titulo: 'decomisos', renglon: ['celulares', 'balanzas'], categorias: [''], cabceras: ['tipo', 'cantidad'], categoria: false },
 ];
-let categorias = ['sustancia', 'armas', 'vehiculos', 'divisas', 'otras'];
 let decomisos = {
+    detenidos: [{ nombre: 'hombres', peso: 'hombres', }, { nombre: 'mujeres', peso: 'mujeres' }],
+    sustancia: [{ nombre: 'cocaina' }, { nombre: 'marihuana' }, { nombre: 'crack' }, { nombre: 'heroína' }, { nombre: 'hachis' }],
     armas: [{ nombre: 'fuego', peso: 'armas de fuego', }, { nombre: 'blanca', peso: 'armas blanca' }],
     vehiculos: [{ nombre: 'motor', peso: 'motores' }, { nombre: 'carro', peso: 'carros' }, { nombre: 'jepeta', peso: 'jepeta' }],
-    divisas: [{ nombre: 'us$', peso: 'dolares' }, { nombre: 'eu$', peso: 'euros' }, { nombre: 'rd$', peso: 'pesos' }],
+    divisas: [{ nombre: 'rd$', peso: 'pesos' }, { nombre: 'us$', peso: 'dolares' }, { nombre: 'eu$', peso: 'euros' }],
     otras: [{ nombre: 'celulares', peso: 'celulares' }, { nombre: 'balanzas', peso: 'balanzas' }],
-    sustancia: [{ nombre: 'cocaina' }, { nombre: 'marihuana' }, { nombre: 'crack' }, { nombre: 'heroína' }, { nombre: 'hachis' }]
 };
-let medidas = ['gramos', 'porciones'];
-let titulos = ['orden', 'division', 'inspectoria', 'seccion', 'provincia', 'municipio', 'barrio', 'actividad', 'salidad', 'informacionsalida', 'longitud', 'latitud'];
+let medidas = ['porciones', 'gramos'];
+let titulos = ['orden', 'division', 'inspectoria', 'seccion', 'provincia', 'municipio', 'barrio', 'actividad', 'fecha', 'salida', 'informacionsalida', 'longitud', 'latitud'];
 class Casos {
     constructor() {
     }
@@ -69,10 +69,6 @@ class Casos {
                     campoQuery += ` @${element}`;
                     parametro.push({ campo: element, tipo: 'NVarChar', valor: barrio.toString() });
                     break;
-                case 'salidad':
-                    campoQuery += `convert(datetime, @${element}, 21) `;
-                    parametro.push({ campo: element, tipo: 'VarChar', valor: `${datos['fsalidad']} ${datos['salidad']}:00.000` });
-                    break;
                 default:
                     campoQuery += `@${element} `;
                     parametro.push({ campo: element, tipo: 'NVarChar', valor: datos[element] });
@@ -84,7 +80,7 @@ class Casos {
             return res.send({ condicion: 'correcto' }).status(200);
         });
     }
-    ndecomisos(req, res) {
+    decomisos(req, res) {
         let caso = req.query.caso;
         let datos = { menu: MenuCtl_1.default.menus('casos') };
         let enviar = {
@@ -104,10 +100,12 @@ class Casos {
                 }
                 enviar['accion'] = 'resultados';
                 enviar['elementos'] = elementos;
-                let sql = `SELECT id, orden,fecha, hora, orden,desc_provincia as provincia,desc_municipio as municipio, desc_division as division, desc_inspectoria as inspectoria, desc_seccion as seccion,desc_actividad as actividad  FROM dbo.VWoperativos where id  =@id`;
+                let sql = `SELECT id, orden,CONVERT(varchar(12), fecha,103) AS  fecha, CAST(salida AS varchar(8)) as salida, desc_provincia as provincia,desc_municipio as municipio, desc_division as division, desc_inspectoria as inspectoria, desc_seccion as seccion,desc_actividad as actividad, latitud, longitud  FROM dbo.VWoperativos where id  =@id`;
                 parametro.push({ campo: 'id', tipo: 'Int', valor: caso });
-                Consulta.consulta(sql, parametro).then(elemento => {
-                    if (elemento === []) {
+                Consulta.consulta(sql, parametro).then(elementos => {
+                    let elemento;
+                    elemento = elementos;
+                    if (elemento.length === 0) {
                         return res.redirect('/casos');
                     }
                     else {
@@ -118,14 +116,15 @@ class Casos {
             });
         }
     }
-    resultado(req, res) {
+    new_decomisos(req, res) {
         let datos = req.body;
         let sql = '';
         let decomisoSql = '';
         let id = datos['id'];
         let parametroD = [{ campo: 'id', tipo: 'Int', valor: id }];
         let parametro = [{ campo: 'id', tipo: 'Int', valor: id }];
-        let informacion = ['hombres', 'mujeres', 'novedades', 'informacionll', 'llegada'];
+        let informacion = ['novedades', 'informacionll', 'llegada', 'latitud', 'longitud'];
+        let categorias = Object.keys(decomisos);
         categorias.forEach(categoria => {
             let temp = decomisos[categoria];
             temp.forEach(element => {
@@ -156,7 +155,7 @@ class Casos {
                 if (sql !== '')
                     sql += ', ';
                 if (Element === 'llegada') {
-                    parametro.push({ campo: Element, tipo: 'VarChar', valor: `${datos['fllegada']} ${datos['llegada']}:00.000` });
+                    parametro.push({ campo: Element, tipo: 'VarChar', valor: `${datos['llegada']}:00.000` });
                 }
                 else {
                     parametro.push({ campo: Element, tipo: 'VarChar', valor: datos[Element] });
@@ -188,25 +187,23 @@ class Casos {
         let inicio = (query['inicio'] === undefined) ? `${fecha(hoy)} 00:00:00` : `${query['inicio']} 00:00:00`;
         switch (tipo) {
             case 'activos':
-                sql = `SELECT orden,desc_provincia as provincia,desc_municipio as municipio, desc_division as division, desc_inspectoria as inspectoria, desc_seccion as seccion,desc_actividad as actividad,salidad as salida,INFORMACIONSALIDA as informado FROM [Operaciones].[dbo].[VWoperativos] where llegada IS NULL order by salidad desc`;
+                sql = `SELECT orden,desc_provincia as provincia,desc_municipio as municipio, desc_division as division, desc_inspectoria as inspectoria, desc_seccion as seccion,desc_actividad as actividad, CAST(salida AS varchar(8)) as salida,INFORMACIONSALIDA as informado FROM [Operaciones].[dbo].[VWoperativos] where llegada IS NULL order by fecha, salida desc`;
                 break;
             case 'caso':
                 if (isNaN(caso)) {
                     return res.send([]).status(200);
                 }
                 else {
-                    campoQuery = tabladecomiso();
-                    sql = `SELECT *, ${campoQuery}  FROM dbo.Operativos O where O.id = ${caso}`;
+                    sql = `SELECT [id],[orden],CONVERT(varchar(12), fecha,103) AS  fecha,CAST(llegada AS varchar(8)) as llegada,CAST(salida AS varchar(8)) as salida,[desc_division] as division,[desc_inspectoria] as inspectoria,[desc_seccion] as seccion,[desc_provincia] as provincia,[desc_municipio] as municipio,[desc_actividad] as actividad,[longitud],[latitud],[barrio],[informacionll],[informacionsalida],[novedades] FROM [Operaciones].[dbo].[VWoperativos] where id = ${caso}`;
                 }
                 break;
             case 'casos':
                 final = (datos['final'] === undefined) ? `${fecha(hoy)} 23:59:00` : `${datos['final']} 23:59:00`;
                 inicio = (datos['inicio'] === undefined) ? `${fecha(hoy)} 00:00:00` : `${datos['inicio']} 00:00:00`;
-                campoQuery = ` salidad BETWEEN @inicio AND @final`;
+                campoQuery = ` fecha BETWEEN @inicio AND @final`;
                 parametro.push({ campo: 'inicio', tipo: 'NVarChar', valor: inicio });
                 parametro.push({ campo: 'final', tipo: 'NVarChar', valor: final });
                 titulos.forEach(element => {
-                    console.log(datos[element]);
                     if (datos[element] === '' || datos[element] === 0 || !datos[element]) {
                     }
                     else {
@@ -216,16 +213,16 @@ class Casos {
                         parametro.push({ campo: element, tipo: 'NVarChar', valor: datos[element] });
                     }
                 });
-                sql = `SELECT id,orden,desc_provincia as provincia,desc_municipio as municipio, desc_division as division, desc_inspectoria as inspectoria, desc_seccion as seccion,desc_actividad as actividad,llegada FROM dbo.VWoperativos where ${campoQuery} order by llegada,salidad`;
+                sql = `SELECT id,orden,desc_provincia as provincia,desc_municipio as municipio, desc_division as division, desc_inspectoria as inspectoria, desc_seccion as seccion,desc_actividad as actividad,CONVERT(varchar(12), fecha,103) AS  fecha,CAST(salida AS varchar(8)) as salida,CAST(llegada AS varchar(8)) as llegada FROM dbo.VWoperativos where ${campoQuery} order by fecha,  llegada,salida`;
                 break;
             case 'decomisos':
                 campoQuery = tabladecomiso();
-                sql = `SELECT [orden],(select S.nombre from Secciones S where o.seccion = S.id) as seccion,[hombres],[mujeres], ${campoQuery}  FROM dbo.Operativos AS O where llegada is not null and salidad BETWEEN @inicio AND @final`;
-                parametro.push({ campo: 'inicio', tipo: 'NVarChar', valor: inicio });
-                parametro.push({ campo: 'final', tipo: 'NVarChar', valor: final });
+                sql = `SELECT [orden],(select S.desc_seccion from Secciones S where o.seccion = S.id) as seccion, ${campoQuery}  FROM dbo.Operativos AS O where llegada is not null and fecha BETWEEN @inicio AND @final`;
+                parametro.push({ campo: 'inicio', tipo: 'VarChar', valor: inicio });
+                parametro.push({ campo: 'final', tipo: 'VarChar', valor: final });
                 break;
             case 'estadisticas':
-                sql = `SELECT [orden],(select S.nombre from Secciones S where o.seccion = S.id) as seccion,[hombres],[mujeres], ${campoQuery}  FROM dbo.Operativos AS O where llegada is not null and salidad BETWEEN @inicio AND @final`;
+                sql = `SELECT [orden],(select S.desc_seccion from Secciones S where o.seccion = S.id) as seccion, ${campoQuery}  FROM dbo.Operativos AS O where llegada is not null and fecha BETWEEN @inicio AND @final`;
                 parametro.push({ campo: 'inicio', tipo: 'NVarChar', valor: inicio });
                 parametro.push({ campo: 'final', tipo: 'NVarChar', valor: final });
                 break;
@@ -236,13 +233,14 @@ class Casos {
             let elements;
             elements = element;
             if (elements.length === 0)
-                return res.send([]).status(200);
+                return res.send(sql).status(200);
             switch (tipo) {
                 case 'activos':
                     return res.send(element).status(200);
                     break;
                 case 'caso':
                     let barrios = element[0]['barrio'];
+                    element[0]['decomiso'] = yield resultado(caso);
                     barrio = yield Barrios(barrios);
                     element[0]['barrio'] = barrio;
                     obj = element[0];
@@ -262,7 +260,7 @@ class Casos {
     geocasos(req, res) {
         let tipo = req.params.estado;
         let sql = '';
-        sql = `SELECT orden,desc_provincia as provincia,desc_municipio as municipio, desc_division as division, desc_inspectoria as inspectoria, desc_seccion as seccion,desc_actividad as actividad,longitud, latitud,llegada,salidad FROM [Operaciones].[dbo].[VWoperativos]  order by salidad desc`;
+        sql = `SELECT orden,desc_provincia as provincia,desc_municipio as municipio, desc_division as division, desc_inspectoria as inspectoria, desc_seccion as seccion,desc_actividad as actividad,longitud, latitud,llegada,CAST(salida AS varchar(8)) as salida FROM [Operaciones].[dbo].[VWoperativos]  order by salida desc`;
         Consulta.consulta(sql, []).then(caso => {
             let datos;
             datos = caso;
@@ -277,7 +275,7 @@ class Casos {
                 let temp = {
                     "type": "Feature", "properties": {
                         condicion: (element['llegada'] === null) ? "activos" : "realizados",
-                        hora: (element['llegada'] === undefined) ? element['salidad'] : element['llegada'],
+                        hora: (element['llegada'] === undefined) ? element['salida'] : element['llegada'],
                     },
                     "geometry": {
                         "type": "Point",
@@ -296,17 +294,22 @@ class Casos {
 exports.default = Casos;
 function resultado(caso) {
     return __awaiter(this, void 0, void 0, function* () {
-        let sqlr = `SELECT [categoria],[nombre],[cantidad],[unidad]  FROM [Operaciones].[dbo].[Decomisos]  where operativo = ${caso}`;
+        let sqlr = `SELECT [categoria],[nombre],[cantidad],[unidad]  FROM [Operaciones].[dbo].[Decomisos]  where operativo = ${caso} order by categoria`;
         let a;
         a = yield Consulta.consulta(sqlr, []);
-        let t = {};
+        let t = [];
         a.forEach(element => {
+            let temp = { nombre: '', cantidad: 0, unidad: '' };
             if (element['categoria'] === 'sustancias') {
-                t[`${element.nombre}${element.unidad}`] = element.cantidad;
+                temp.unidad = element.unidad;
+                temp.nombre = element.nombre;
             }
             else {
-                t[`${element.nombre}`] = element.cantidad;
+                temp.unidad = element.unidad;
+                temp.nombre = element.categoria;
             }
+            temp.cantidad = element.cantidad;
+            t.push(temp);
         });
         return t;
     });
@@ -315,18 +318,18 @@ function Barrios(lista) {
     return __awaiter(this, void 0, void 0, function* () {
         lista = `('${lista.replace(/,/g, "','")}')`;
         let l = [];
-        let sqlr = `SELECT [nombre]  FROM [Operaciones].[dbo].[Barrios] where enlace in ${lista}`;
+        let sqlr = `SELECT [desc_barrio]  FROM [Operaciones].[dbo].[Barrios] where enlace in ${lista}`;
         let a;
         a = yield Consulta.consulta(sqlr, []);
         for (let i = 0; i < a.length; i++) {
-            l.push(a[i]['nombre']);
+            l.push(a[i]['desc_barrio']);
         }
         return l.toString();
     });
 }
 function fecha(fecha) {
     var cumpleanos = new Date(fecha);
-    let mes = cero(cumpleanos.getMonth());
+    let mes = cero(cumpleanos.getMonth() + 1);
     let ano = cumpleanos.getFullYear();
     let dia = cero(cumpleanos.getDate());
     return `${ano}-${mes}-${dia}`;
@@ -336,6 +339,7 @@ function cero(valor) {
 }
 function tabladecomiso() {
     let campoQuery = '';
+    let categorias = Object.keys(decomisos);
     categorias.forEach(categoria => {
         let temp = decomisos[categoria];
         temp.forEach(element => {

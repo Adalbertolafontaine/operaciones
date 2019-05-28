@@ -1,6 +1,6 @@
 <div>
 
-    
+
     <input type="hidden" name="id" value="{{caso.id}}">
     <div class="resultados">
         {{#each elementos as |elemento| }}
@@ -12,9 +12,9 @@
                 <thead>
                     <tr>
 
-                    {{#if elemento.categoria}}
-                    <th></th>
-                    {{/if}}
+                        {{#if elemento.categoria}}
+                        <th></th>
+                        {{/if}}
                         {{#each elemento.renglon as |cabceras|}}
                         <th>{{cabceras}}</th>
                         {{/each}}
@@ -44,17 +44,21 @@
             <textarea name="novedades" id="ITnovedades" cols="30" rows="10"></textarea>
         </div>
     </div>
-
+    <div class="electores">
+        <div>
+            <label for="Txtlatitud">Latitud</label>
+            <input type="text" name="latitud" id='ITlatitud' required value="{{caso.latitud}}">
+        </div>
+        <div>
+            <label for="Txtlatitud">Latitud</label>
+            <input type="text" name="longitud" id="ITlongitud" required value="{{caso.longitud}}">
+        </div>
+    </div>
     <div class="electores">
         <div><label for="Tinformacionll">Informado Por:</label>
             <input type="text" name="informacionll" id="Tinformacionll" required>
         </div>
         <div class="electores">
-            <div>
-                <label for="ITfecha">Fecha:</label>
-                <input type="date" name="fllegada" id="ITfecha" required>
-            </div>
-
             <div>
                 <label for="ITllegada">Hora de llegada:</label>
                 <input type="time" name="llegada" id="ITllegada" required>
@@ -62,5 +66,5 @@
         </div>
 
 
-    </div>    
+    </div>
 </div>

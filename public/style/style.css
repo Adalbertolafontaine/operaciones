@@ -1,6 +1,7 @@
 * {
     margin: 0;
-    padding: 0
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -25,7 +26,7 @@ header {
 
 header a {
     color: #fff;
-    font-family: 'Roboto', sans-serif;
+
     text-transform: capitalize;
     font-size: 1.2rem;
 
@@ -73,7 +74,7 @@ header nav li:hover>ul {
 
 header nav li ul li {
     margin: 0px;
-    
+
     position: relative;
 }
 
@@ -98,7 +99,7 @@ a {
     display: flex;
     -webkit-flex-flow: row;
     flex-flow: row;
-    font-family: 'Sniglet', cursive;
+
 
 }
 
@@ -183,6 +184,7 @@ table {
 }
 
 table thead {
+    color: white;
     background-color: #4CAF50;
 
 }
@@ -206,15 +208,16 @@ table th {
 
 }
 
-/*table tr:nth-child(even) {
+table tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-table tr:hover {
+table tbody tr:hover {
     background-color: #ddd;
-}*/
+}
+
 table td {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+
     font-size: 12px;
     padding: 5px;
     text-transform: capitalize;
@@ -230,7 +233,7 @@ table th {
     padding-bottom: 5px;
     text-align: center;
     /*font-size: 0.9rem ;*/
-    color: white;
+    
     text-transform: capitalize;
     font-size: smaller
 }
@@ -241,7 +244,7 @@ table th {
 
 .tablaEST {
     text-align: left;
-    text-transform: uppercase
+
 }
 
 table tfoot td {
@@ -302,8 +305,7 @@ select {
     padding-left: .4em;
     border: none;
     border-bottom: 1px solid #ccc;
-    /*border-radius: 4px;
-  font-family: Arial, Helvetica, sans-serif;*/
+    /*border-radius: 4px;*/
     margin-bottom: 15px;
     text-rendering: auto;
     -webkit-appearance: textfield;
@@ -321,7 +323,6 @@ button,
 input[type=reset] {
     width: 48%;
     font-size: small;
-    font-family: Arial;
     border-color: rgb(17, 4, 32);
     border: none;
     cursor: pointer;
@@ -421,7 +422,7 @@ button:disabled {
 
 .electores span {
     text-transform: capitalize;
-    font-family: Georgia, 'Times New Roman', Times, serif
+
 }
 
 /**************************************Radio Bottum*********************************************/
@@ -453,7 +454,7 @@ button:disabled {
     border: #888 0.5px solid;
     border-radius: 2px;
     padding: 5px;
-    font-family: 'Courier New', Courier, monospace
+
 }
 
 
@@ -499,36 +500,6 @@ button:disabled {
 .renglones {
     border-bottom: #00171f 1px solid;
 
-}
-
-
-
-.ventana {
-    border-top: #00171f solid 1px;
-    padding: 5px;
-    display: -webkit-flex;
-    /* Safari */
-    display: flex;
-}
-
-
-
-.ventana label {
-    -webkit-flex: 1;
-    /* Safari 6.1+ */
-    -ms-flex: 1;
-    /* IE 10 */
-    flex: 1;
-    text-align: center
-}
-
-.ventana span {
-    font-size: 1.5rem;
-    margin: auto
-}
-
-.ventana a:checked+label {
-    color: white
 }
 
 
@@ -657,8 +628,8 @@ button:disabled {
 .ol-popup {
     position: absolute;
     background-color: white;
-    -webkit-filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
-    filter: drop-shadow(0 1px 4px rgba(0,0,0,0.2));
+    -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
     padding: 15px;
     border-radius: 10px;
     border: 1px solid #cccccc;
@@ -667,12 +638,14 @@ button:disabled {
     min-width: 280px;
     font-size: small;
     text-transform: capitalize;
-  }
+}
 
-  .ol-popup span{
-      font-weight: bold
-  }
-  .ol-popup:after, .ol-popup:before {
+.ol-popup span {
+    font-weight: bold
+}
+
+.ol-popup:after,
+.ol-popup:before {
     top: 100%;
     border: solid transparent;
     content: " ";
@@ -680,25 +653,29 @@ button:disabled {
     width: 0;
     position: absolute;
     pointer-events: none;
-  }
-  .ol-popup:after {
+}
+
+.ol-popup:after {
     border-top-color: white;
     border-width: 10px;
     left: 48px;
     margin-left: -10px;
-  }
-  .ol-popup:before {
+}
+
+.ol-popup:before {
     border-top-color: #cccccc;
     border-width: 11px;
     left: 48px;
     margin-left: -11px;
-  }
-  .ol-popup-closer {
+}
+
+.ol-popup-closer {
     text-decoration: none;
     position: absolute;
     top: 2px;
     right: 8px;
-  }
-  .ol-popup-closer:after {
+}
+
+.ol-popup-closer:after {
     content: "✖";
-  }
+}

@@ -2,9 +2,9 @@
     <div class="consulta">
         <form action="" id='FRcasos'>
             <label for="finicio">Fecha Inicial</label>
-            <input type="date" name="inicio" id="finicio"  required>
+            <input type="date" name="inicio" id="finicio" required>
             <label for="ffinal">Fecha Final</label>
-            <input type="date" name="final" id="ffinal"  required>
+            <input type="date" name="final" id="ffinal" required>
             <label for="TXTorden">Orden</label>
             <input type="text" name="orden" id="TXTorden">
             <label for="SLdivisiones">División</label>
@@ -28,10 +28,88 @@
 </div>
 <div class="col-centro" id='DVcolegios'>
 
-    <div id="operativo">
+    <div id="operativo" class="ventana">
 
         {{>page/casolista}}
 
+    </div>
+    <div id='caso' class="ventana">
+        <a href="#" id="atras">Atras</a>
+        <div class="electores">
+            <div>
+                <label for="ITorden">Orden:</label>
+                <span id="orden"></span>
+            </div>
+
+            <div>
+                <label for="ITfecha">Fecha:</label>
+                <span id="fecha"></span>
+            </div>
+            <div>
+                <label for="ITsalidad">Hora de salida:</label>
+                <span id="salida"></span>
+            </div>
+            <div>
+                <label for="SLactividades">actividad:</label>
+                <span id="actividad"></span>
+            </div>
+        </div>
+        <div class="electores">
+            <div>
+                <label for="SLdivisiones">Division:</label>
+                <span id="division"></span>
+            </div>
+            <div>
+                <label for="SLinspectoria">Inspectorias</label>
+                <span id="inspectoria"></span>
+            </div>
+
+            <div>
+                <label for="SLseccion">seccion:</label>
+                <span id="seccion"></span>
+            </div>
+
+        </div>
+        <div class="electores">
+            <div>
+                <label for="SLprovincias">Provincia:</label>
+                <span id="provincia"></span>
+            </div>
+            <div>
+                <label for="SLmunicipio">Municipio:</label>
+                <span id="municipio"></span>
+            </div>
+            <div>
+                <label for="SLmunicipio">Barrios:</label>
+                <span id="barrio"></span>
+            </div>
+        </div>
+        <div class="electores">
+            <div><label for="">Información de Salidad</label> <span id="informacionsalida"></span></div>
+            <div><label for="">Información de Llegada</label> <span id="informacionll"></span></div>
+            <div><label for="">Hora de Llegada:</label><span id="llegada"></span></div>
+        </div>
+        <div class="electores">
+
+            <div>
+                <table>
+                    <caption>Resultados</caption>
+                    <thead>
+                        <tr>
+                            <th>Decomiso</th>
+                            <th>Cantidad</th>
+                            <th>Unidad</th>
+                        </tr>
+                    </thead>
+                    <tbody id='tresultado'></tbody>
+
+                </table>
+            </div>
+        </div>
+        <div>
+            <label for="">Novedades:</label>
+            <div id="novedades"></div>
+        </div>
     </div>
 
 

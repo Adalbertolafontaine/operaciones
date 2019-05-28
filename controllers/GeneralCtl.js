@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const MenuCtl_1 = __importDefault(require("../controllers/MenuCtl"));
 const ConsultaCtl_1 = __importDefault(require("./ConsultaCtl"));
-const fs_1 = __importDefault(require("fs"));
 let consulta = new ConsultaCtl_1.default();
 class GeneralCtl {
     constructor() {
@@ -18,78 +17,6 @@ class GeneralCtl {
             title: 'Operativos',
             datos: datos
         });
-    }
-    division(req, res) {
-        let divisiones = [];
-        let salida = [];
-        let titulos = [];
-        let d = [];
-        let erro = [];
-        let rango = 1000;
-        var campos = ['nombre', 'estatus', 'sueldo', 'institucion'];
-        fs_1.default.readFile('./data/dicom.csv', 'utf-8', (err, data) => {
-            if (err) {
-                console.log('error: ', err);
-            }
-            else {
-                data = data.toString();
-                data = data.toLowerCase();
-                d = data.split('\r\n');
-                for (let i = 0; i < d.length; i++) {
-                    let temp = d[i].split(';');
-                    if (i === 0) {
-                        titulos = temp;
-                        let l = (titulos[0] === ` ${campos[0].length}`);
-                        console.log(l);
-                    }
-                    else {
-                        if (temp[0] === '' && temp.length === 1) {
-                        }
-                        else {
-                            let t = {};
-                            if (titulos.length !== temp.length) {
-                                erro.push({ temp, i });
-                            }
-                            else {
-                                for (let j = 0; j < titulos.length; j++) {
-                                    t[titulos[j]] = (titulos[j] === 'sueldo') ? parseInt(temp[j]) : temp[j];
-                                }
-                                divisiones.push(t);
-                            }
-                        }
-                    }
-                }
-                if (erro.length > 0) {
-                    return res.send({ erro }).status(200);
-                }
-                else {
-                    envio();
-                }
-            }
-        });
-        function envio() {
-            let sql = '';
-            let distancia = (divisiones.length < rango) ? divisiones.length : rango;
-            for (let i = 0; i < distancia; i++) {
-                if (sql !== '')
-                    sql += ',';
-                let temp = '';
-                campos.forEach(element => {
-                    if (temp !== '')
-                        temp += ',';
-                    temp += `'${divisiones[0][element]}'`;
-                });
-                sql += `(${temp})`;
-                divisiones.shift();
-            }
-            let i = `INSERT INTO [dbo].[Empleados] (${campos.toString()}) VALUES ${sql}`;
-            if (divisiones.length === 0) {
-                return res.send(i).status(200);
-            }
-            else {
-                envio();
-            }
-        }
     }
     categorias(req, res) {
         let categorias = req.params.categoria;
